@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="MapEdit" default="make" basedir=".">
+	
+	<description>
+        This script will build the Map editor.
+        This program is opensource   
+    </description>
+
+    <property name="src" location="src" />
+    <property name="build" location="build" />
+    <property name="build.classes" location="${build}/classes" />
+	<property name="target" value="1.8"/>
+    <property name="source" value="1.8"/>
+
+	<target name="init" description="Create the output directories.">
+		<mkdir dir="${build}" />
+		<mkdir dir="${build.classes}" />
+	</target>
+
+	<target name="compile" depends="init" description="Compile the source.">
+		<javac destdir="${build.classes}" includeantruntime="false" optimize="on" debug="off" source="${source}" target="${target}" nowarn="on" encoding="UTF-8">
+			<compilerarg value="-Xlint:deprecation"/>
+			<compilerarg value="-Xlint:unchecked"/>
+    		<src path="${src}" />
+		</javac>
+	</target>
+
+	<target name="forms">
+		<copy todir="${build.classes}/window">
+			<fileset dir="${src}/window">
+				<include name="MainWindow.fxml"/>
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="jarclient" depends="compile" description="Create the jar file">
+		<jar destfile="${build}/MapEdit.jar">
+			<fileset dir="${build.classes}" />
+			<manifest>
+				<attribute name="Main-Class" value="window.Main"/>
+			</manifest>
+		</jar>
+
+	</target>
+
+	<target name="clean">
+		<echo>Clean class files</echo>
+		<delete dir="${build.classes}" />
+	</target>
+
+	<target name="make" depends="init,compile,forms,jarclient,clean">
+		<echo>Make all project</echo>
+	</target>
+</project>

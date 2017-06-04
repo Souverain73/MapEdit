@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.embed.swing.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.canvas.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="window.MainWindowController">
+   <children>
+      <MenuBar prefHeight="25.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+                  <MenuItem mnemonicParsing="false" onAction="#openMap" text="Open map" />
+                  <MenuItem mnemonicParsing="false" onAction="#saveMap" text="Save map" />
+                  <MenuItem mnemonicParsing="false" text="Export" />
+              <MenuItem mnemonicParsing="false" onAction="#exit" text="Exit" />
+            </items>
+          </Menu>
+            <Menu mnemonicParsing="false" text="Options">
+              <items>
+                  <RadioMenuItem fx:id="viewModeToggle" mnemonicParsing="false" onAction="#updateViewMode" text="Детальное отображение" />
+                  <RadioMenuItem fx:id="showTextToggle" mnemonicParsing="false" onAction="#updateViewMode" text="Показывать надписи" />
+              </items>
+            </Menu>
+        </menus>
+      </MenuBar>
+      <BorderPane layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
+         <center>
+            <Pane fx:id="canvasPane" minHeight="10.0" minWidth="10.0" prefHeight="400.0" prefWidth="400.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Canvas fx:id="mainCanvas" height="200.0" onMouseClicked="#onMouseClick" onMouseDragged="#onDrag" onMouseMoved="#onMouseMove" onScroll="#onCanvasScroll" width="200.0" />
+               </children>
+            </Pane>
+         </center>
+         <top>
+            <AnchorPane prefHeight="40.0" prefWidth="600.0" style="-fx-background-color: #eeeeee;" BorderPane.alignment="CENTER">
+               <children>
+                  <Button layoutX="6.0" layoutY="8.0" mnemonicParsing="false" onAction="#setToolMove" text="Двигать" />
+                  <Button layoutX="73.0" layoutY="8.0" mnemonicParsing="false" onAction="#setToolPlacePillar" text="Столб" />
+                  <Button layoutX="128.0" layoutY="8.0" mnemonicParsing="false" onAction="#setToolPlaceLine" text="Линия" />
+               </children>
+            </AnchorPane>
+         </top>
+         <right>
+            <Pane fx:id="toolOptionsPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+         </right>
+      </BorderPane>
+   </children>
+</AnchorPane>
