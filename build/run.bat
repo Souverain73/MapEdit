@@ -1,0 +1,1 @@
+java -Xmx1g -jar MapEdit.jar debug

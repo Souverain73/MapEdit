@@ -64,7 +64,7 @@ public class Map implements XMLSerializable{
     }
 
     public void draw(GraphicsContext context, ViewContext view){
-        objects.stream().filter(o->o.getID()>=0).forEach(o->o.draw(context, view));
+        objects.stream().filter(o->o.getID()>=-1).forEach(o->o.draw(context, view));
     }
 
     public void addObject(MapObject object){

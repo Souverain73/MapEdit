@@ -74,9 +74,12 @@ public class MainWindowController {
     }
 
     private void updateCanvasContent(){
+        System.out.println("Update canvas");
         mainCanvas.getGraphicsContext2D().clearRect(0, 0, mainCanvas.getWidth(), mainCanvas.getHeight());
-        if (map!=null)
+        if (map!=null){
+            System.out.println("Draw map");
             map.draw(mainCanvas.getGraphicsContext2D(), vc);
+        }
     }
 
     @FXML

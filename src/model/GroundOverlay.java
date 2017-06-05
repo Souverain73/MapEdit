@@ -32,6 +32,7 @@ public class GroundOverlay implements MapObject, IPlaceable {
 
     @Override
     public void draw(GraphicsContext gc, ViewContext vc) {
+        System.out.println("Draw ground overlay at x:" + (west*vc.getScalex() + vc.getX()) + " y:" + (north*vc.getScaley() + vc.getY()));
         gc.drawImage(overlay, west*vc.getScalex() + vc.getX(), north*vc.getScaley() + vc.getY(),
                 w * vc.getScalex(), h * vc.getScaley());
     }
