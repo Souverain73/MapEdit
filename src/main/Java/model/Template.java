@@ -1,10 +1,12 @@
 package model;
 
+import com.itextpdf.text.pdf.PdfWriter;
 import helpers.ID;
 import helpers.Params;
 import helpers.XML;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
+import model.interfaces.MapObject;
 import org.w3c.dom.Node;
 import window.ViewContext;
 
@@ -119,4 +121,19 @@ public class Template implements MapObject {
     public boolean hasParam(String name) {
         return base.hasParam(name);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if ( !(obj instanceof Template)) return false;
+        Template other = (Template) obj;
+
+        if (this.oc != other.oc) return false;
+
+        if (!this.getRawParams().equals(other.getRawParams())) return false;
+
+        return true;
+    }
+
+    @Override
+    public void SerializeToPDF(PdfWriter writer, ViewContext vc) {}
 }

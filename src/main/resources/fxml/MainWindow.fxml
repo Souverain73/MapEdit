@@ -49,9 +49,10 @@
                   <Button layoutX="6.0" layoutY="8.0" mnemonicParsing="false" onAction="#setToolMove" text="Двигать" />
                   <Button layoutX="73.0" layoutY="8.0" mnemonicParsing="false" onAction="#setToolPlacePillar" text="Столб" />
                   <Button layoutX="128.0" layoutY="8.0" mnemonicParsing="false" onAction="#setToolPlaceLine" text="Линия" />
-                  <Button layoutX="185.0" layoutY="8.0" mnemonicParsing="false" onAction="#setToolEdit" text="Редактировать" />
+                  <Button layoutX="300.0" layoutY="8.0" mnemonicParsing="false" onAction="#setToolEdit" text="Редактировать" />
                   <Button layoutX="493.0" layoutY="8.0" mnemonicParsing="false" text="Типы столбов" />
-                  <Button layoutX="289.0" layoutY="8.0" mnemonicParsing="false" onAction="#setToolNumering" text="Нумерация" />
+                  <Button layoutX="404.0" layoutY="8.0" mnemonicParsing="false" onAction="#setToolNumering" text="Нумерация" />
+                  <Button layoutX="185.0" layoutY="8.0" mnemonicParsing="false" onAction="#setToolStation" text="Прочие объекты" />
                </children>
             </AnchorPane>
          </top>

@@ -110,17 +110,19 @@ public class MainWindowController {
         vc.setX(-map.getGeox()*vc.getScalex());
         vc.setY(-map.getGeoy()*vc.getScaley());
         setTool(new MoveTool());
-        if (map.getTemplates().size() == 0){
-            initDefaultTemplates(map);
-        }
+        map.removeAllTemplates();
+        initDefaultTemplates(map);
         updateCanvasContent();
     }
 
     private void initDefaultTemplates(Map map) {
         map.addTemplate(new Pillar("СКЦ9-2"));
-        map.addTemplate(new Lantern("ЖКУ01-250"));
+        map.addTemplate(new Lantern("РКУ-250"));
+        map.addTemplate(new Pillar("ПАРК"));
+        map.addTemplate(new Lantern("ЛСД"));
         map.addTemplate(new Pillar());
         map.addTemplate(new Lantern());
+        map.addTemplate(new Lantern("РКУ-125"));
     }
 
     @FXML
@@ -130,7 +132,7 @@ public class MainWindowController {
         fc.setInitialDirectory(new File("."));
         File file = fc.showSaveDialog(stage);
         if (file!=null) {
-            try(OutputStreamWriter outputStream = new OutputStreamWriter(new FileOutputStream(file))) {
+            try(OutputStreamWriter outputStream = new OutputStreamWriter(new FileOutputStream(file), "UTF-8")) {
                 outputStream.write(XML.xmlHeader());
                 outputStream.write(XML.tag("kml", map.SerializeToXML()));
             } catch (Exception e) {
@@ -178,6 +180,11 @@ public class MainWindowController {
 
     @FXML
     private void setToolEdit(){ setTool(new EditTool(toolOptionsPane));}
+
+    @FXML
+    private void setToolStation(){
+        setTool(new StationTool());
+    }
 
     @FXML
     private void setToolNumering(){

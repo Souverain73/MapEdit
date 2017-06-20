@@ -7,6 +7,7 @@ import helpers.XML;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import model.interfaces.MapObject;
 import org.w3c.dom.Node;
 import window.ViewContext;
 

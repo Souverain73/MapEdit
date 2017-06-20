@@ -1,11 +1,14 @@
 package model;
 
+import com.itextpdf.text.pdf.PdfWriter;
 import helpers.XML;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
+import model.interfaces.IPlaceable;
+import model.interfaces.MapObject;
 import org.w3c.dom.Node;
 import window.Main;
 import window.ViewContext;
@@ -187,5 +190,10 @@ public class GroundOverlay implements MapObject, IPlaceable {
     @Override
     public boolean hasParam(String name) {
         return false;
+    }
+
+    @Override
+    public void SerializeToPDF(PdfWriter writer, ViewContext vc) {
+        throw new IllegalStateException("Ground overlay can't be serialized directly");
     }
 }

@@ -1,6 +1,4 @@
-package model;
-
-import org.w3c.dom.Node;
+package model.interfaces;
 
 /**
  * Created by Souverain73 on 30.05.2017.

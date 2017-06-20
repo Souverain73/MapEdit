@@ -10,6 +10,7 @@ import helpers.XML;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.text.Font;
+import model.interfaces.MapObject;
 import org.w3c.dom.Node;
 import window.ViewContext;
 
@@ -118,7 +119,8 @@ public class Pillar extends Point {
                 XML.coordsTag(x, -y));
     }
 
-    public void SerializeToPDF(PdfWriter writer, ViewContext vc) throws DocumentException, IOException {
+    @Override
+    public void SerializeToPDF(PdfWriter writer, ViewContext vc) {
         PdfContentByte content = writer.getDirectContent();
         content.saveState();
         content.circle(vc.pdfx(x), vc.pdfy(y), 6);

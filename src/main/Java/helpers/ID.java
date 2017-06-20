@@ -16,4 +16,8 @@ public class ID {
 
     public static int getNextTemplate() {return lastTemplate--;}
     public static void useTemplate(int id) {lastTemplate = Math.min(id, lastTemplate);}
+
+    public static void resetTemplate() {
+        lastTemplate = -2;
+    }
 }

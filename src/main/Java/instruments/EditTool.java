@@ -7,11 +7,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import model.*;
+import model.interfaces.MapObject;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static java.awt.SystemColor.text;
 
 /**
  * Created by Souverain73 on 15.06.2017.
@@ -50,6 +49,9 @@ public class EditTool extends ToolAdapter {
         }else if (target instanceof Link) {
             Link link = (Link) target;
             vb.getChildren().add(createLineEditPane(link));
+        }else if (target instanceof Station) {
+            Station stat = (Station) target;
+            vb.getChildren().addAll(createParamsEditTable(stat.getRawParams(), Pillar.pLabel), saveButton);
         }
         editPane.getChildren().addAll(vb);
     }

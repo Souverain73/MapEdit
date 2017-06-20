@@ -1,12 +1,12 @@
 package model;
 
-import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfWriter;
+import helpers.ID;
 import helpers.XML;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Alert;
-import javafx.scene.image.Image;
+import model.interfaces.MapObject;
+import model.interfaces.XMLSerializable;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 /**
  * Created by Souverain73 on 25.05.2017.
  */
-public class Map implements XMLSerializable{
+public class Map implements XMLSerializable {
     double geox = 500, geoy = 500;
     double width, height;
 
@@ -50,6 +50,7 @@ public class Map implements XMLSerializable{
                     case "lantern": addObject(Lantern.fromXML(element)); break;
                     case "link": addObject(Link.fromXML(element, this)); break;
                     case "template": addObject(Template.fromXML(element)); break;
+                    case "station": addObject(Station.fromXML(element)); break;
                 }
             }
         } catch (SAXException e) {
@@ -118,16 +119,8 @@ public class Map implements XMLSerializable{
                 vc.setScalex(ground.getW()/ground.overlay.getWidth());
                 vc.setScaley(ground.getH()/ground.overlay.getHeight());
                 vc.setPdfSize(ground.overlay.getWidth(), ground.overlay.getHeight());
-            }
-
-            if (mo instanceof Item) {
-                Item item = (Item) mo;
-                item.SerializeToPDF(writer, vc);
-            }
-
-            if (mo instanceof Link) {
-                Link link = (Link) mo;
-                link.SerializeToPDF(writer, vc);
+            } else{
+                mo.SerializeToPDF(writer, vc);
             }
         }
     }
@@ -157,7 +150,13 @@ public class Map implements XMLSerializable{
     }
 
     public void addTemplate(MapObject object){
+        if (objects.contains(object)) return;
         objects.add(0, new Template(object));
+    }
+
+    public void removeAllTemplates(){
+        ID.resetTemplate();
+        objects.removeAll(getTemplates());
     }
 
     public void renumber(){

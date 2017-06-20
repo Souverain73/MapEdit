@@ -6,7 +6,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.VBox;
 import model.Item;
-import model.MapObject;
+import model.interfaces.MapObject;
 import model.Pillar;
 
 import java.util.List;

@@ -2,12 +2,11 @@ package instruments;
 
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
+import model.Item;
 import model.Link;
-import model.MapObject;
-import model.Pillar;
+import model.interfaces.MapObject;
 
 /**
  * Created by Souverain73 on 31.05.2017.
@@ -21,7 +20,7 @@ public class PlaceLineTool extends ToolAdapter{
     protected void click(double x, double y, MouseButton button) {
         if (button == MouseButton.PRIMARY) {
 
-            MapObject target = map.getObjectByPoint(vc.vtix(x), vc.vtiy(y), vc.getCollideRadius(), Pillar.class);
+            MapObject target = map.getObjectByPoint(vc.vtix(x), vc.vtiy(y), vc.getCollideRadius(), Item.class);
 
             if (target == null) return;
 

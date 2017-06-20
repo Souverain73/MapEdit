@@ -8,6 +8,8 @@ import helpers.Params;
 import helpers.XML;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
+import model.interfaces.IPlaceable;
+import model.interfaces.MapObject;
 import org.w3c.dom.Node;
 import window.ViewContext;
 
@@ -18,7 +20,7 @@ import java.util.Map;
 /**
  * Created by Souverain73 on 25.05.2017.
  */
-public abstract class Item implements MapObject, IPlaceable{
+public abstract class Item implements MapObject, IPlaceable {
     int id;
     String name;
     double x, y;
@@ -27,7 +29,6 @@ public abstract class Item implements MapObject, IPlaceable{
 
     public Item() {
         this.id = ID.getNext();
-        this.name = "SampleItem";
     }
 
 
@@ -145,7 +146,8 @@ public abstract class Item implements MapObject, IPlaceable{
         return params;
     }
 
-    public void SerializeToPDF(PdfWriter writer, ViewContext vc) throws DocumentException, IOException {
+    @Override
+    public void SerializeToPDF(PdfWriter writer, ViewContext vc) {
         PdfContentByte content = writer.getDirectContent();
         content.saveState();
         content.circle(vc.vtix(x), vc.vtiy(y), 10);
