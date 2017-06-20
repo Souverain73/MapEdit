@@ -99,12 +99,17 @@ public class Link implements MapObject {
         Point2D f = from.getPos();
         Point2D t = to.getPos();
         content.saveState();
-        content.setLineDash(type.getDashes()*5, 0);
-        content.setColorStroke(ptc(type.getColor()));
 
+        if (type.getDashes() > 0)
+            content.setLineDash(type.getDashes(), 0);
+        else
+            content.setLineDash(1,0,0);
+
+        content.setColorStroke(ptc(type.getColor()));
         content.moveTo(vc.pdfx(f.getX()), vc.pdfy(f.getY()));
         content.lineTo(vc.pdfx(t.getX()), vc.pdfy(t.getY()));
-        content.closePathStroke();
+        content.stroke();
+        content.newPath();
 
         content.restoreState();
     }
@@ -197,5 +202,13 @@ public class Link implements MapObject {
         if (one == from) return  to;
         if (one == to) return from;
         return null;
+    }
+
+    public MapObject getFrom() {
+        return from;
+    }
+
+    public MapObject getTo() {
+        return to;
     }
 }

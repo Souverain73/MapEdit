@@ -13,7 +13,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         FXMLLoader loader = new FXMLLoader();
         Parent root = loader.load(getClass().getResource("/fxml/MainWindow.fxml"));
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("Map editor");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }

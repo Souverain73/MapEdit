@@ -16,7 +16,7 @@ import window.ViewContext;
  * Created by Souverain73 on 19.06.2017.
  */
 public class Station extends Item {
-    private static final double BASE_SIZE = 30;
+    private static final double BASE_SIZE = 35;
     private interface drawMethod{
         void draw(Point2D pos, double size, String label, GraphicsContext gc, ViewContext vc);
     }
@@ -64,16 +64,13 @@ public class Station extends Item {
     public void draw(GraphicsContext gc, ViewContext vc) {
         double size = BASE_SIZE;
         if (vc.isFixedSize()){
-            size = size / ViewContext.FIXED_SCALE *vc.getScale();
+            size = size / vc.getFixedScale() *vc.getScale();
         }
         type.co.draw(new Point2D(vc.absX(x), vc.absY(y)), size, formatLabel(), gc, vc);
     }
 
     public void SerializeToPDF(PdfWriter writer, ViewContext vc){
-        double size = BASE_SIZE;
-        if (vc.isFixedSize()){
-            size = size / ViewContext.FIXED_SCALE *vc.getScale();
-        }
+        double size = BASE_SIZE * vc.getObjectsScale();
         type.co.drawPDF(new Point2D(vc.pdfx(x), vc.pdfy(y)), size, formatLabel(), writer, vc);
     }
 

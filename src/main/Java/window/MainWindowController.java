@@ -127,6 +127,7 @@ public class MainWindowController {
 
     @FXML
     private void saveMap(){
+        map.fixErrors();
         FileChooser fc = new FileChooser();
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Карта с объектами (kml)", "*.kml"));
         fc.setInitialDirectory(new File("."));
@@ -143,6 +144,7 @@ public class MainWindowController {
 
     @FXML
     private void exportXML(){
+        map.fixErrors();
         FileChooser fc = new FileChooser();
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Pdf файл (pdf)", "*.pdf"));
         fc.setInitialDirectory(new File("."));
@@ -154,7 +156,8 @@ public class MainWindowController {
                 doc.setMargins(0,0,0,0);
                 PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream(file));
                 doc.open();
-                map.SerializeToPDF(doc, writer);
+                ViewContext vc = new ViewContext();
+                map.SerializeToPDF(doc, writer, vc);
                 doc.close();
                 writer.close();
             }catch (Exception e){
@@ -204,7 +207,8 @@ public class MainWindowController {
     @FXML
     private void renumber(){
         map.renumber();
-        (new Alert(Alert.AlertType.INFORMATION, "Столбы пронумерованы в порядке установки", ButtonType.OK)).showAndWait();
+        (new Alert(Alert.AlertType.INFORMATION, "Столбы пронумерованы в порядке установки", ButtonType.OK))
+                .showAndWait();
     }
 
     private void zoom(double ammount, double tx, double ty){

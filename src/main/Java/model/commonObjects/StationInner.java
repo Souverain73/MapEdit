@@ -7,6 +7,7 @@ import helpers.ITEXTPDF;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import window.ViewContext;
 
 /**
@@ -15,6 +16,7 @@ import window.ViewContext;
 public class StationInner extends CommonObject {
     @Override
     public void draw(Point2D pos, double size, String label, GraphicsContext gc, ViewContext vc) {
+        double fontSize = size * 0.3;
         gc.setFill(Color.WHITE);
         gc.setStroke(Color.BLACK);
         gc.fillRect(pos.getX()-size/2, pos.getY()-size/4, size, size/2);
@@ -26,12 +28,15 @@ public class StationInner extends CommonObject {
         p[0][2] = pos.getX() + size / 2; p[1][2] = pos.getY() + size / 4;
         gc.setFill(Color.BLACK);
         gc.fillPolygon(p[0], p[1], 3);
-        if (vc.isShowText())
-            gc.fillText(label, pos.getX() - size/2, pos.getY() - size/4-10);
+        if (vc.isShowText()) {
+            gc.setFont(new Font(fontSize));
+            gc.fillText(label, pos.getX() - size / 2, pos.getY() - size / 4 - fontSize/2);
+        }
     }
 
     @Override
     public void drawPDF(Point2D pos, double size, String label, PdfWriter writer, ViewContext vc) {
+        double fontSize = size * 0.3;
         PdfContentByte dc = writer.getDirectContent();
         dc.saveState();
         dc.setColorFill(BaseColor.WHITE);
@@ -41,11 +46,11 @@ public class StationInner extends CommonObject {
         dc.moveTo(pos.getX() - size / 2, pos.getY() - size / 4);
         dc.lineTo(pos.getX() - size / 2, pos.getY() + size / 4);
         dc.lineTo(pos.getX() + size / 2, pos.getY() - size / 4);
-        dc.lineTo(pos.getX() - size / 2, pos.getY() - size / 4);
         dc.closePath();
         dc.fill();
+        dc.newPath();
         dc.beginText();
-        dc.setFontAndSize(ITEXTPDF.getFontByName("Arial"), 10);
+        dc.setFontAndSize(ITEXTPDF.getFontByName("Arial"), (float)fontSize);
         dc.showTextAligned(PdfContentByte.ALIGN_LEFT, label, (float)(pos.getX() - size/2), (float)(pos.getY() + size/4+5), 0);
         dc.endText();
         dc.restoreState();

@@ -86,9 +86,9 @@ public class EditTool extends ToolAdapter {
         Label lbType = new Label("Тип столба:");
         ComboBox<Template> cbType = new ComboBox<>();
         cbType.getItems().addAll(map.getTemplatesByOC(ObjectClass.PILLAR).stream().map(o->(Template)o).toArray(Template[]::new));
-        cbType.getSelectionModel().select((Template) target.getPillarTeplate());
+        cbType.getSelectionModel().select((Template) target.getPillarTemplate());
         cbType.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
-                target.setPillarTeplate(newValue));
+                target.setPillarTemplate(newValue));
         cbType.setLayoutY(15);
 
         Label lbLantern = new Label("Тип светильника:");

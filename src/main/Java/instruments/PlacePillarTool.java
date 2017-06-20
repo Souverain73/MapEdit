@@ -28,7 +28,7 @@ public class PlacePillarTool extends ToolAdapter {
     protected void click(double x, double y, MouseButton button) {
         if (button == MouseButton.PRIMARY){
             Pillar pillar = new Pillar();
-            pillar.setPillarTeplate(pillarTemplate);
+            pillar.setPillarTemplate(pillarTemplate);
             pillar.setLanternTemplate(lanternTemplate);
 
             pillar.place(vc.vtix(x), vc.vtiy(y));

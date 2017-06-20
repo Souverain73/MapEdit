@@ -36,7 +36,7 @@ public abstract class Item implements MapObject, IPlaceable {
     public void draw(GraphicsContext gc, ViewContext vc) {
         double r = 12;
         if (vc.isFixedSize()){
-            r = r/ViewContext.FIXED_SCALE *vc.getScale();
+            r = r/vc.getFixedScale() * vc.getScale();
         }
         gc.fillOval(vc.absX(x) - r/2, vc.absY(y) - r/2, r, r);
     }

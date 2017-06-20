@@ -1,6 +1,7 @@
 package model;
 
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.ColumnText;
 import com.itextpdf.text.pdf.PdfWriter;
 import helpers.ID;
 import helpers.XML;
@@ -107,13 +108,13 @@ public class Map implements XMLSerializable {
         return sb.toString();
     }
 
-    public void SerializeToPDF(com.itextpdf.text.Document doc, PdfWriter writer) throws IOException, DocumentException {
-        ViewContext vc = new ViewContext();
+    public void SerializeToPDF(com.itextpdf.text.Document doc, PdfWriter writer, ViewContext vc) throws IOException, DocumentException {
         for (MapObject mo : objects){
             if (mo instanceof GroundOverlay) {
                 GroundOverlay ground = (GroundOverlay) mo;
                 com.itextpdf.text.Image groundImage = com.itextpdf.text.Image.getInstance(ground.getImagePath());
-                doc.add(groundImage);
+                groundImage.setAbsolutePosition(0, 0);
+                writer.getDirectContent().addImage(groundImage);
                 vc.setX(ground.getWest());
                 vc.setY(ground.getNorth());
                 vc.setScalex(ground.getW()/ground.overlay.getWidth());
@@ -123,6 +124,13 @@ public class Map implements XMLSerializable {
                 mo.SerializeToPDF(writer, vc);
             }
         }
+    }
+
+    public void fixErrors(){
+        List<MapObject> badLinks = objects.stream().filter(o-> o instanceof Link)
+            .map(o-> (Link)o).filter(l->l.getFrom().getID() == l.getTo().getID())
+                .collect(Collectors.toList());
+        objects.removeAll(badLinks);
     }
 
     public MapObject getObjectById(int id){

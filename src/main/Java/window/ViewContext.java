@@ -4,11 +4,11 @@ package window;
  * Created by Souverain73 on 25.05.2017.
  */
 public class ViewContext {
-    public static final double FIXED_SCALE = 85000;
+    private static final double FIXED_SCALE = 85000;
 
     public double getCollideRadius() {
         if (fixedSize){
-            return 1/FIXED_SCALE;
+            return 1/fixedScale;
         }
         return 1/getScale();
     }
@@ -27,6 +27,8 @@ public class ViewContext {
     DrawMode drawMode;
     boolean showText;
     boolean fixedSize;
+    double fixedScale = FIXED_SCALE;
+    double objectsScale = 1;
 
     public ViewContext setX(double x) {
         this.x = x;
@@ -139,6 +141,19 @@ public class ViewContext {
 
     public double pdfy(double y){
         return pdfHeight - vtiy(y);
+    }
+
+    public double getFixedScale() {
+        return fixedScale;
+    }
+
+    public double getObjectsScale() {
+        return objectsScale;
+    }
+
+    public ViewContext setObjectsScale(double objectsScale) {
+        this.objectsScale = objectsScale;
+        return this;
     }
 
     @Override
