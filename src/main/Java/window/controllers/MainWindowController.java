@@ -1,7 +1,6 @@
-package window;
+package window.controllers;
 
 import com.itextpdf.text.Document;
-import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfWriter;
 import helpers.XML;
@@ -9,7 +8,9 @@ import instruments.*;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Alert;
@@ -19,18 +20,21 @@ import javafx.scene.control.RadioMenuItem;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Lantern;
 import model.Map;
 import model.Pillar;
+import operations.Operation;
+import operations.OperationsManager;
+import window.ViewContext;
 
 
-import javax.swing.*;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainWindowController {
     @FXML
@@ -58,6 +62,7 @@ public class MainWindowController {
     Stage stage;
 
     ViewContext vc = new ViewContext();
+    OperationsManager opMan = new OperationsManager();
 
     Map map;
     ITool instrument;
@@ -143,7 +148,7 @@ public class MainWindowController {
     }
 
     @FXML
-    private void exportXML(){
+    private void exportPDF(){
         map.fixErrors();
         FileChooser fc = new FileChooser();
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Pdf файл (pdf)", "*.pdf"));
@@ -151,15 +156,13 @@ public class MainWindowController {
         File file = fc.showSaveDialog(stage);
         if (file!=null) {
             try {
-                Document doc = new Document();
-                doc.setPageSize(new Rectangle((float)map.getWidth(), (float)map.getHeight()));
-                doc.setMargins(0,0,0,0);
-                PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream(file));
-                doc.open();
-                ViewContext vc = new ViewContext();
-                map.SerializeToPDF(doc, writer, vc);
-                doc.close();
-                writer.close();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/SavePdfDialog.fxml"));
+                Parent root = loader.load();
+                ((SavePdfDialogController)loader.getController()).setInitialParams(map, file);
+                Stage dialog = new Stage();
+                dialog.setScene(new Scene(root));
+                dialog.initModality(Modality.APPLICATION_MODAL);
+                dialog.showAndWait();
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -263,8 +266,15 @@ public class MainWindowController {
         updateCanvasContent();
     }
 
+    @FXML
+    private void buttonUndo(){
+        opMan.undo();
+
+        updateCanvasContent();
+    }
+
     void setTool(ITool tool){
-        tool.init(mainCanvas.getGraphicsContext2D(), vc, map);
+        tool.init(mainCanvas.getGraphicsContext2D(), vc, map, opMan);
         instrument = tool;
         toolOptionsPane.getChildren().clear();
         Node optionsPanel = tool.createOptionsPanel();

@@ -9,6 +9,10 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
 import model.*;
 import model.interfaces.MapObject;
+import operations.ObjectsManipulation;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -24,28 +28,52 @@ public class PlacePillarTool extends ToolAdapter {
     private boolean placeLine;
     private Link.LineType lineType;
 
+    private class Op extends ObjectsManipulation{
+        MapObject newLast;
+        MapObject currentLast;
+        public Op(Manipulation type, Map map, List<MapObject> objects, MapObject newLast) {
+            super(type, map, objects);
+            this.newLast = newLast;
+            currentLast = lastPillar;
+        }
+
+        @Override
+        public void apply() {
+            super.apply();
+            lastPillar  = newLast;
+        }
+
+        @Override
+        public void undo() {
+            super.undo();
+            lastPillar = currentLast;
+        }
+    }
+
     @Override
     protected void click(double x, double y, MouseButton button) {
         if (button == MouseButton.PRIMARY){
+            List<MapObject> createdObjects = new ArrayList<>();
             Pillar pillar = new Pillar();
             pillar.setPillarTemplate(pillarTemplate);
             pillar.setLanternTemplate(lanternTemplate);
 
             pillar.place(vc.vtix(x), vc.vtiy(y));
-            map.addObject(pillar);
+            createdObjects.add(pillar);
 
             if (placeLine && lastPillar != null){
-                map.addObject(new Link(lastPillar, pillar, lineType));
+                createdObjects.add(new Link(lastPillar, pillar, lineType));
             }
-            lastPillar = pillar;
+            opMan.apply(new Op(ObjectsManipulation.Manipulation.CREATE, map, createdObjects, pillar));
 
         }else if (button == MouseButton.SECONDARY){
             MapObject target = map.getObjectByPoint(vc.vtix(x), vc.vtiy(y), vc.getCollideRadius(), Pillar.class);
             if (target!=null && target instanceof Pillar) {
-                map.removeObject(target);
-                for (Link l : map.getLinksById(target.getID())) {
-                    map.removeObject(l);
-                }
+                List<MapObject> removedObjects = new ArrayList<>();
+                removedObjects.add(target);
+                if (target == lastPillar) lastPillar = null;
+                removedObjects.addAll(map.getLinksById(target.getID()));
+                opMan.apply(new Op(ObjectsManipulation.Manipulation.REMOVE, map, removedObjects, null));
             }
         }
     }

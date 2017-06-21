@@ -9,7 +9,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="window.MainWindowController">
+<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="window.controllers.MainWindowController">
    <children>
       <MenuBar prefHeight="25.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <menus>
@@ -17,7 +17,7 @@
             <items>
                   <MenuItem mnemonicParsing="false" onAction="#openMap" text="Открыть" />
                   <MenuItem mnemonicParsing="false" onAction="#saveMap" text="Сохранить" />
-                  <MenuItem mnemonicParsing="false" onAction="#exportXML" text="Экспорт в PDF" />
+                  <MenuItem mnemonicParsing="false" onAction="#exportPDF" text="Экспорт в PDF" />
               <MenuItem mnemonicParsing="false" onAction="#exit" text="Выход" />
             </items>
           </Menu>
@@ -50,7 +50,7 @@
                   <Button layoutX="73.0" layoutY="8.0" mnemonicParsing="false" onAction="#setToolPlacePillar" text="Столб" />
                   <Button layoutX="128.0" layoutY="8.0" mnemonicParsing="false" onAction="#setToolPlaceLine" text="Линия" />
                   <Button layoutX="300.0" layoutY="8.0" mnemonicParsing="false" onAction="#setToolEdit" text="Редактировать" />
-                  <Button layoutX="493.0" layoutY="8.0" mnemonicParsing="false" text="Типы столбов" />
+                  <Button layoutX="493.0" layoutY="8.0" mnemonicParsing="false" onAction="#buttonUndo" text="Откат" />
                   <Button layoutX="404.0" layoutY="8.0" mnemonicParsing="false" onAction="#setToolNumering" text="Нумерация" />
                   <Button layoutX="185.0" layoutY="8.0" mnemonicParsing="false" onAction="#setToolStation" text="Прочие объекты" />
                </children>

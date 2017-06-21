@@ -139,7 +139,7 @@ public class Pillar extends Point {
         String[] labelStrings = formatLabel().split("\n");
         int i=0;
         for (String s : labelStrings) {
-            content.showTextAligned(PdfContentByte.ALIGN_LEFT, s, (float) (vc.pdfx(x) + size + 2), (float) (vc.pdfy(y) + size + 2 - (10*i++)), 0);
+            content.showTextAligned(PdfContentByte.ALIGN_LEFT, s, (float) (vc.pdfx(x) + size + 2), (float) (vc.pdfy(y) + size + 2 - (fontSize*i++)), 0);
         }
         content.endText();
 

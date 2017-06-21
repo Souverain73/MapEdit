@@ -5,6 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import model.Map;
+import operations.OperationsManager;
 import window.ViewContext;
 
 /**
@@ -16,12 +17,14 @@ public class ToolAdapter implements ITool {
     protected GraphicsContext gc;
     protected ViewContext vc;
     protected Map map;
+    protected OperationsManager opMan;
 
     @Override
-    public void init(GraphicsContext gc, ViewContext vc, Map map) {
+    public void init(GraphicsContext gc, ViewContext vc, Map map, OperationsManager opMan) {
         this.gc = gc;
         this.vc = vc;
         this.map = map;
+        this.opMan = opMan;
     }
 
     @Override

@@ -81,8 +81,16 @@ public class Map implements XMLSerializable {
         objects.add(object);
     }
 
+    public void addAll(List<MapObject> objects){
+        this.objects.addAll(objects);
+    }
+
     public void removeObject(MapObject object) {
         objects.remove(object);
+    }
+
+    public void removeAll(List<MapObject> objects){
+        this.objects.removeAll(objects);
     }
 
     public double getGeox() {

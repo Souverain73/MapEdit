@@ -28,6 +28,9 @@ public class PlaceLineTool extends ToolAdapter{
                 selected = target;
                 return;
             }
+            if (selected == target){
+                return;
+            }
 
             Link link = new Link(selected, target, type);
             map.addObject(link);
