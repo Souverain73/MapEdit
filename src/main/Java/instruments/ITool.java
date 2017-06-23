@@ -1,5 +1,6 @@
 package instruments;
 
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
@@ -12,6 +13,7 @@ import window.ViewContext;
  */
 public interface ITool {
     void init(GraphicsContext gc, ViewContext vc, Map map, OperationsManager opMan);
+    void draw(double x, double y);
     String getName();
     Node createOptionsPanel();
     /** base method for click event */

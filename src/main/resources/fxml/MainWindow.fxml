@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.embed.swing.*?>
@@ -9,9 +10,9 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="window.controllers.MainWindowController">
+<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="window.controllers.MainWindowController">
    <children>
-      <MenuBar prefHeight="25.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <MenuBar prefHeight="25.0" prefWidth="500.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <menus>
           <Menu mnemonicParsing="false" text="Файл">
             <items>
@@ -23,9 +24,9 @@
           </Menu>
             <Menu mnemonicParsing="false" text="Настройки">
               <items>
-                  <RadioMenuItem fx:id="viewModeToggle" mnemonicParsing="false" onAction="#updateViewMode" text="Детальное отображение" />
+                  <RadioMenuItem fx:id="viewModeToggle" mnemonicParsing="false" onAction="#updateViewMode" selected="true" text="Детальное отображение" />
                   <RadioMenuItem fx:id="showTextToggle" mnemonicParsing="false" onAction="#updateViewMode" text="Показывать надписи" />
-                  <RadioMenuItem fx:id="fixedSizeToggle" mnemonicParsing="false" onAction="#updateViewMode" text="Фиксированный размер" />
+                  <RadioMenuItem fx:id="fixedSizeToggle" mnemonicParsing="false" onAction="#updateViewMode" selected="true" text="Фиксированный размер" />
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Инструменты">
@@ -35,24 +36,59 @@
             </Menu>
         </menus>
       </MenuBar>
-      <BorderPane layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
+      <BorderPane layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
          <center>
             <Pane fx:id="canvasPane" minHeight="10.0" minWidth="10.0" prefHeight="400.0" prefWidth="400.0" BorderPane.alignment="CENTER">
                <children>
-                  <Canvas fx:id="mainCanvas" height="200.0" onMouseClicked="#onMouseClick" onMouseDragged="#onDrag" onMouseMoved="#onMouseMove" onScroll="#onCanvasScroll" width="200.0" />
+                  <Canvas fx:id="mainCanvas" height="200.0" width="200.0" />
+                  <Canvas fx:id="toolCanvas" height="200.0" onMouseClicked="#onMouseClick" onMouseDragged="#onDrag" onMouseMoved="#onMouseMove" onScroll="#onCanvasScroll" width="200.0" />
                </children>
             </Pane>
          </center>
          <top>
-            <AnchorPane prefHeight="40.0" prefWidth="600.0" style="-fx-background-color: #eeeeee;" BorderPane.alignment="CENTER">
+            <AnchorPane minWidth="0.0" pickOnBounds="false" prefHeight="33.0" prefWidth="600.0" style="-fx-background-color: #eeeeee;" BorderPane.alignment="CENTER">
                <children>
-                  <Button layoutX="6.0" layoutY="8.0" mnemonicParsing="false" onAction="#setToolMove" text="Двигать" />
-                  <Button layoutX="73.0" layoutY="8.0" mnemonicParsing="false" onAction="#setToolPlacePillar" text="Столб" />
-                  <Button layoutX="128.0" layoutY="8.0" mnemonicParsing="false" onAction="#setToolPlaceLine" text="Линия" />
-                  <Button layoutX="300.0" layoutY="8.0" mnemonicParsing="false" onAction="#setToolEdit" text="Редактировать" />
-                  <Button layoutX="493.0" layoutY="8.0" mnemonicParsing="false" onAction="#buttonUndo" text="Откат" />
-                  <Button layoutX="404.0" layoutY="8.0" mnemonicParsing="false" onAction="#setToolNumering" text="Нумерация" />
-                  <Button layoutX="185.0" layoutY="8.0" mnemonicParsing="false" onAction="#setToolStation" text="Прочие объекты" />
+                  <HBox prefHeight="20.0" prefWidth="74.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#buttonUndo" prefHeight="25.0" prefWidth="64.0" text="Отмена">
+                           <HBox.margin>
+                              <Insets bottom="3.0" right="3.0" top="3.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="25.0" prefWidth="409.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#setToolPlacePillar" text="Столб">
+                           <HBox.margin>
+                              <Insets left="3.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#setToolPlaceLine" text="Линия">
+                           <HBox.margin>
+                              <Insets left="3.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#setToolStation" text="Прочие объекты">
+                           <HBox.margin>
+                              <Insets left="3.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#setToolEdit" text="Редактировать">
+                           <HBox.margin>
+                              <Insets left="3.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#setToolNumering" text="Нумерация">
+                           <HBox.margin>
+                              <Insets left="3.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                     <padding>
+                        <Insets bottom="3.0" top="3.0" />
+                     </padding>
+                  </HBox>
                </children>
             </AnchorPane>
          </top>

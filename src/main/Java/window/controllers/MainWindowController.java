@@ -9,6 +9,7 @@ import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -39,6 +40,9 @@ import java.util.List;
 public class MainWindowController {
     @FXML
     Canvas mainCanvas;
+
+    @FXML
+    Canvas toolCanvas;
 
     @FXML
     Pane canvasPane;
@@ -76,6 +80,7 @@ public class MainWindowController {
                 stage = (Stage) newValue.getWindow();
         });
         instrument = new ToolAdapter();
+        updateViewMode(null);
     }
 
     public void onResize(Scene scene){
@@ -85,6 +90,8 @@ public class MainWindowController {
     private void fitCanvasToPane() {
         mainCanvas.setWidth(canvasPane.getWidth());
         mainCanvas.setHeight(canvasPane.getHeight());
+        toolCanvas.setWidth(canvasPane.getWidth());
+        toolCanvas.setHeight(canvasPane.getHeight());
         updateCanvasContent();
     }
 
@@ -235,15 +242,22 @@ public class MainWindowController {
         updateCanvasContent();
     }
 
+    private void updateToolCanvas(double x, double y){
+        toolCanvas.getGraphicsContext2D().clearRect(0, 0, toolCanvas.getWidth(), toolCanvas.getHeight());
+        instrument.draw(x, y);
+    }
+
     @FXML
     private void onMouseMove(MouseEvent event){
         instrument.onMove(event);
+        updateToolCanvas(event.getX(), event.getY());
     }
 
     @FXML
     private void onDrag(MouseEvent event){
         instrument.onDrag(event);
         updateCanvasContent();
+        updateToolCanvas(event.getX(), event.getY());
     }
 
     @FXML
@@ -274,7 +288,7 @@ public class MainWindowController {
     }
 
     void setTool(ITool tool){
-        tool.init(mainCanvas.getGraphicsContext2D(), vc, map, opMan);
+        tool.init(toolCanvas.getGraphicsContext2D(), vc, map, opMan);
         instrument = tool;
         toolOptionsPane.getChildren().clear();
         Node optionsPanel = tool.createOptionsPanel();

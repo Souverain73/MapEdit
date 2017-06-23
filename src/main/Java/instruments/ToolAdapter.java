@@ -1,5 +1,6 @@
 package instruments;
 
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseButton;
@@ -72,6 +73,10 @@ public class ToolAdapter implements ITool {
 
     }
 
+    @Override
+    public void draw(double x, double y) {
+
+    }
 
     @Override
     public String toString() {

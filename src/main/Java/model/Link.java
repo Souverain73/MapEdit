@@ -157,7 +157,25 @@ public class Link implements MapObject {
         double my = Math.min(from.getY(), to.getY());
         if (x<mx || y < my || x > tx || y > ty)
             return false;
-        else return true;
+
+        double A = to.getX() - from.getX();
+        double B = from.getY() - to.getY();
+
+        double l = Math.sqrt(A*A + B*B);
+
+        double C = -A*from.getX() -B*from.getY();
+
+        double dist = Math.abs(A*x + B*y + C)/l;
+
+        System.out.println("x = [" + x + "], y = [" + y + "], r = [" + r + "]");
+        System.out.println("from = " + from);
+        System.out.println("to = " + to);
+        System.out.println("A = " + A);
+        System.out.println("B = " + B);
+        System.out.println("C = " + C);
+        System.out.println("dist = " + dist);
+
+        return true;
     }
 
     @Override

@@ -15,9 +15,9 @@ public class ObjectsManipulation implements Operation {
         REMOVE
     }
 
-    Manipulation type;
-    List<MapObject> objects;
-    Map map;
+    protected Manipulation type;
+    protected List<MapObject> objects;
+    protected Map map;
 
     public ObjectsManipulation(Manipulation type, Map map, MapObject ... objects){
         this.type = type;

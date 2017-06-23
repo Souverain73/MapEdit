@@ -27,6 +27,7 @@ public class PlacePillarTool extends ToolAdapter {
     private Template lanternTemplate;
     private boolean placeLine;
     private Link.LineType lineType;
+    private Pillar drawPillar = new Pillar();
 
     private class Op extends ObjectsManipulation{
         MapObject newLast;
@@ -73,7 +74,7 @@ public class PlacePillarTool extends ToolAdapter {
                 removedObjects.add(target);
                 if (target == lastPillar) lastPillar = null;
                 removedObjects.addAll(map.getLinksById(target.getID()));
-                opMan.apply(new Op(ObjectsManipulation.Manipulation.REMOVE, map, removedObjects, null));
+                opMan.apply(new Op(ObjectsManipulation.Manipulation.REMOVE, map, removedObjects, lastPillar));
             }
         }
     }
@@ -105,7 +106,7 @@ public class PlacePillarTool extends ToolAdapter {
         ComboBox<Link.LineType> cbLine = new ComboBox<>();
         cbLine.getItems().addAll(Link.LineType.values());
         cbLine.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
-                lineType = newValue);
+            lineType = newValue);
         cbLine.getSelectionModel().select(0);
         cbLine.setLayoutY(125);
 
@@ -132,5 +133,15 @@ public class PlacePillarTool extends ToolAdapter {
     protected void move(double oldx, double oldy, double newx, double newy) {
         super.move(oldx, oldy, newx, newy);
         dragTarget = null;
+    }
+
+    @Override
+    public void draw(double x, double y) {
+        if (dragTarget != null) return;
+        drawPillar.place(vc.vtix(x), vc.vtiy(y));
+        drawPillar.draw(gc, vc);
+        if (placeLine && lastPillar != null){
+            (new Link(lastPillar, drawPillar, lineType)).draw(gc, vc);
+        }
     }
 }
