@@ -81,6 +81,7 @@ public class PlacePillarTool extends ToolAdapter {
 
     @Override
     public Node createOptionsPanel() {
+        if (optionsPane != null) return optionsPane;
         optionsPane = new Pane();
 
         Label lbType = new Label("Тип столба:");

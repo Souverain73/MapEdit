@@ -18,9 +18,9 @@ import java.util.List;
  */
 public class Link implements MapObject {
     public enum LineType{
+        ISOLATED("Изолированный и СИП", Color.GREEN, 5.0),
         AIR("Воздушный кабель", Color.RED, 5.0),
         GROUND("Подземный кабель", Color.RED, 0.0),
-        ISOLATED("Изолированный и СИП", Color.GREEN, 5.0),
         AIR_NOT_ISOLATED("Воздушный (голый)", Color.CYAN, 0.0),
         STRETCH("Растяжка", Color.BLACK, 0.0);
 
@@ -158,8 +158,8 @@ public class Link implements MapObject {
         if (x<mx || y < my || x > tx || y > ty)
             return false;
 
-        double A = to.getX() - from.getX();
-        double B = from.getY() - to.getY();
+        double A = from.getY() - to.getY();
+        double B = to.getX() - from.getX();
 
         double l = Math.sqrt(A*A + B*B);
 
@@ -167,15 +167,7 @@ public class Link implements MapObject {
 
         double dist = Math.abs(A*x + B*y + C)/l;
 
-        System.out.println("x = [" + x + "], y = [" + y + "], r = [" + r + "]");
-        System.out.println("from = " + from);
-        System.out.println("to = " + to);
-        System.out.println("A = " + A);
-        System.out.println("B = " + B);
-        System.out.println("C = " + C);
-        System.out.println("dist = " + dist);
-
-        return true;
+        return dist < 2*r;
     }
 
     @Override

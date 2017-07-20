@@ -1,15 +1,11 @@
 package window.controllers;
 
-import com.itextpdf.text.Document;
-import com.itextpdf.text.Rectangle;
-import com.itextpdf.text.pdf.PdfWriter;
 import helpers.XML;
 import instruments.*;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -28,14 +24,11 @@ import javafx.stage.Stage;
 import model.Lantern;
 import model.Map;
 import model.Pillar;
-import operations.Operation;
 import operations.OperationsManager;
 import window.ViewContext;
 
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainWindowController {
     @FXML
@@ -70,6 +63,9 @@ public class MainWindowController {
 
     Map map;
     ITool instrument;
+    private MoveTool moveTool;
+    private PlacePillarTool placePillarTool;
+    private PlaceLineTool placeLineTool;
 
     @FXML
     private void initialize(){
@@ -135,6 +131,8 @@ public class MainWindowController {
         map.addTemplate(new Pillar());
         map.addTemplate(new Lantern());
         map.addTemplate(new Lantern("РКУ-125"));
+        map.addTemplate(new Lantern("ЖКУ-150"));
+        map.addTemplate(new Lantern("РКУ-150"));
     }
 
     @FXML
@@ -178,17 +176,26 @@ public class MainWindowController {
 
     @FXML
     private void setToolMove(){
-        setTool(new MoveTool());
+        if (moveTool == null) {
+            moveTool = new MoveTool();
+        }
+        setTool(moveTool);
     }
 
     @FXML
     private void setToolPlacePillar(){
-        setTool(new PlacePillarTool());
+        if (placePillarTool == null) {
+            placePillarTool = new PlacePillarTool();
+        }
+        setTool(placePillarTool);
     }
 
     @FXML
     private void setToolPlaceLine(){
-        setTool(new PlaceLineTool());
+        if (placeLineTool == null) {
+            placeLineTool = new PlaceLineTool();
+        }
+        setTool(placeLineTool);
     }
 
     @FXML
@@ -258,11 +265,6 @@ public class MainWindowController {
         instrument.onDrag(event);
         updateCanvasContent();
         updateToolCanvas(event.getX(), event.getY());
-    }
-
-    @FXML
-    private void onChangeTool(Event event){
-        setTool((ITool) toolSelector.getSelectionModel().getSelectedItem());
     }
 
     @FXML

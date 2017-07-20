@@ -83,6 +83,7 @@ public class PlaceLineTool extends ToolAdapter{
 
     @Override
     public Node createOptionsPanel() {
+        if (optionsPane != null) return optionsPane;
         optionsPane = new Pane();
         ComboBox<Link.LineType> typeSelector = new ComboBox<>();
         typeSelector.getItems().addAll(Link.LineType.values());
